@@ -30,4 +30,9 @@ export class CarsService {
     if (!car) throw new NotFoundException(`Car with id ${id} not found`);
     return car;
   }
+
+  createCar(car: any) {
+    this.cars.push(car);
+    return car;
+  }
 }

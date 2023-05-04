@@ -11,7 +11,7 @@ import {
   // ValidationPipe,
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
-import { CreateCarDto } from './dto/create-car.dto';
+import { CreateCarDto, UpdateCarDto } from './dto';
 
 @Controller('cars')
 //@UsePipes(ValidationPipe) a nivel de controlador
@@ -30,18 +30,19 @@ export class CarsController {
   @Post()
   //@UsePipes(ValidationPipe) a nivel de metodo
   createCar(@Body() createCarDto: CreateCarDto) {
-    return createCarDto;
+    return this.carsService.create(createCarDto);
   }
 
   @Patch(':id')
-  updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() body: any) {
-    return body;
+  updateCar(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCarDto: UpdateCarDto,
+  ) {
+    return this.carsService.update(id, updateCarDto);
   }
 
   @Delete(':id')
   deleteCar(@Param('id', ParseUUIDPipe) id: string) {
-    return {
-      message: `Car with id ${id} has been deleted`,
-    };
+    return this.carsService.delete(id);
   }
 }
